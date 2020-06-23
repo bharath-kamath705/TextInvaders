@@ -10,6 +10,8 @@ const int PLAYER_START_ROW = 30;
 const int PLAYER_START_COL = 41;
 const int PLAYER_HEIGHT = 2;
 const int PLAYER_SPRITE_STATES = 3;
+const int PLAYER_MISSILE_ROW = -1; // missile init position relateive to player
+const int PLAYER_MISSILE_COL = 2;  // missile init position relative to player
 
 enum Direction
 {
@@ -29,21 +31,17 @@ struct Position
 // to store the sprite
 struct Sprite
 {
-	int height;
-	int width;
-	vector<string> bodyRowStrings;      // characters that make up the body
+	vector<string> bodyRowStrings; // characters that make up the body
 };
-
 
 struct Player
 {
 	Position pos;
 	vector<Sprite> sprites;
-	int curSprite;           // current sprite animation state
+	int curSprite;    // current sprite animation state
+
+	Sprite missile;
+	Position missilePos;
+	bool isFired = false;
 };
-
-
-
-
-
 

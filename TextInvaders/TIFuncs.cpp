@@ -1,5 +1,7 @@
 #include "TextInvaders.h"
 #include "curses.h"
+#include "TIFuncs.h"
+
 using namespace std;
 
 void Move(Position& pos, Direction direction)
@@ -44,6 +46,17 @@ void DrawSprite(Sprite sprite, Position pos)
 	refresh();
 }
 
+void DrawPlayer(const Player& player)
+{
+	DrawSprite(player.sprites[player.curSprite], player.pos);
+
+	if (player.isFired)
+	{
+		DrawSprite(player.missile, player.missilePos);
+	}
+
+}
+
 void InitPlayer(Player& player)
 {
 	player.pos.row = PLAYER_START_ROW;
@@ -66,10 +79,14 @@ void InitPlayer(Player& player)
 	player.sprites.push_back(playerSprite1);
 	player.sprites.push_back(playerSprite2);
 	player.sprites.push_back(playerSprite3);
+
+	player.missile.bodyRowStrings.push_back("|");
 }
 
 void PlayerInput(Player& player, int input)
 {
+	// get move/fire missile input from player
+	// update player and missile positions
 
 	if (player.pos.col == 0 || player.pos.col == WINDOW_COLS)
 	{
@@ -105,11 +122,45 @@ void PlayerInput(Player& player, int input)
 	}
 	break;
 
-	default:
+	case ' ':
 	{
-		return;
+		FireMissile(player);
 	}
 
+	default:
+	{
+
+	}
+
+
+	}
+}
+
+void FireMissile(Player& player)
+{
+	if (!player.isFired)
+	{
+		player.missilePos.col = player.pos.col + PLAYER_MISSILE_COL;
+		player.missilePos.row = player.pos.row + PLAYER_MISSILE_ROW;
+		player.isFired = true;
+	}
+
+}
+
+void UpdateMissile(Player& player)
+{
+	if (player.isFired)
+	{
+		if (player.missilePos.row <= 0)
+		{
+			player.isFired = false;
+			return;
+		}
+
+		else
+		{
+			player.missilePos.row--;
+		}
 	}
 }
 
