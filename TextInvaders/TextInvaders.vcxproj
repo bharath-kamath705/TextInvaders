@@ -141,6 +141,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TIFuncs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TextInvaders.h" />
+    <ClInclude Include="TIFuncs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
